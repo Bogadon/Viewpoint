@@ -35,6 +35,7 @@ module Viewpoint::EWS
         self.item_attachments ||= []
         self.inline_attachments ||= []
         self.extended_properties ||= []
+        self.from ||= nil
       end
 
       def to_ews_basic
@@ -63,6 +64,8 @@ module Viewpoint::EWS
 
         bcc_r = bcc_recipients.collect{|r| {mailbox: {email_address: r}}}
         msg[:bcc_recipients] = bcc_r unless bcc_r.empty?
+
+        msg[:from] = {email_address: from} if from
 
         msg[:is_read] = is_read
 
